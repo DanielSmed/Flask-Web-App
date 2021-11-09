@@ -1,3 +1,7 @@
 .vscode
-website/__pycache__
+__pycache__
 website/database.db
+ProjectSettings.json
+slnx.sqlite
+.suo
+.vs
