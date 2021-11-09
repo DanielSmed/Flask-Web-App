@@ -1,0 +1,22 @@
+{% extends "base.html" %} 
+{% block title %}Profile{% endblock %} 
+{% block content %}
+<h1 align="center">Recipes</h1>
+    <ul class="list-group list-group-flush" id="recipes">
+        {% for recipe in user.recipes %}
+        <li class="list-group-item">
+            {{ recipe.data }}
+            <button type="button" class="close" onClick="deleteRecipe({{ recipe.id }})">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
+    <form method="POST">
+        <textarea name="recipe" id="recipe" class="form-control"></textarea>
+        <br />
+        <div align="center">
+            <button type="submit" class="btn btn-primary">Add Recipe</button>
+        </div>
+    </form>
+{% endblock %}
