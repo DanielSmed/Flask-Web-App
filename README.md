@@ -1,4 +1,4 @@
-# Flask Web App Tutorial
+This is a fork from https://github.com/techwithtim/Flask-Web-App-Tutorial.git
 
 ## Setup & Installtion
 
@@ -21,3 +21,6 @@ python main.py
 ## Viewing The App
 
 Go to `http://127.0.0.1:5000`
+
+## Idea behind this website
+have one place to store and share recipes
