@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Edit{% endblock %}
+{% block content %}
+<h1 align="center">Recipes</h1>
+<form method="POST">
+    <textarea name="recipe" id="recipe" class="form-control"></textarea>
+    <br />
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Add Recipe</button>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="Vegetarian" value="Vegetarian">
+        <label class="form-check-label" for="Vegetarian">Vegetarian</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+        <label class="form-check-label" for="inlineCheckbox2">2</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+        <label class="form-check-label" for="inlineCheckbox1">3</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+        <label class="form-check-label" for="inlineCheckbox2">4</label>
+    </div>
+    <!--Vegetarian = db.Column(db.Boolean)
+    Vegan = db.Column(db.Boolean)
+
+    milk = db.Column(db.Boolean)
+    eggs = db.Column(db.Boolean)
+    peanuts = db.Column(db.Boolean)
+    soya = db.Column(db.Boolean)
+    Gluten = db.Column(db.Boolean)
+    tree_nuts = db.Column(db.Boolean) # (such as walnuts and cashews)
+    fish = db.Column(db.Boolean)
+    shellfish = db.Column(db.Boolean)-->
+</form>
+<ul class="list-group list-group-flush" id="recipes">
+    {% for recipe in user.recipes %}
+    <li class="list-group-item">
+        {{ recipe.title }}
+        <button type="button" class="close" onClick="deleteRecipe({{ recipe.id }})">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

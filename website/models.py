@@ -16,6 +16,7 @@ class Image(db.Model):
 
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
     amount = db.Column(db.Integer)
     images = db.relationship('Image')
     ingredients = db.relationship('Ingredient')
