@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Profile{% endblock %}
 {% block content %}
-<h1 align="center">Recipes</h1>
-<form method="POST">
-    <textarea name="recipe" id="recipe" class="form-control"></textarea>
-    <br />
-    <div align="center">
-        <button type="submit" class="btn btn-primary">Add Recipe</button>
-    </div>
-</form>
+<h1 align="center">TheSmed's Profile</h1>
+user info comming later ...
+<br/>
+<h2 align="center">My Recipes</h2>
 <ul class="list-group list-group-flush" id="recipes">
+    <li align="center" class="list-group-item">
+        <a class="btn btn-primary" id="Profil" type="butten" href="/edit/0">Add new recipe</a>
+    </li>
     {% for recipe in cuser.recipes %}
     <li class="list-group-item">
         {{ recipe.title }}

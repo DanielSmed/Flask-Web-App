@@ -20,11 +20,36 @@ def user(username):
         return redirect(url_for('views.home'))
     return render_template('user.html', user=user, cuser=current_user)
 
+@views.route('/recipe/<int:ID>', methods=['GET', 'POST'])
+@login_required
+def recipe(ID):
+    recipe = Recipe.query.filter_by(id=ID).first()
+    if recipe == None:
+        flash('recipe not found', category='error')
+        return redirect(url_for('views.home'))
+    return render_template('recipe.html', recipe=recipe, cuser=current_user)
+
+@views.route('/edit/<ID>', methods=['GET', 'POST'])
+@login_required
+def edit_recipe(ID):
+    if ID == "0":
+        new_recipe= Recipe(privat=False, user_id=current_user.id)
+        db.session.add(new_recipe)
+        db.session.commit()
+        flash('New recipe created!', category='success')
+        return redirect(url_for('views.home'))
+    else:
+        recipe = Recipe.query.filter_by(id=ID).first()
+        if recipe == None:
+            flash('recipe not found', category='error')
+            return redirect(url_for('views.home'))
+    return render_template('edit_recipe.html', recipe=recipe, cuser=current_user)
 
 @views.route('/delete-recipe', methods=['POST'])
 def delete_recipe():
     recipe = json.loads(request.data)
-    recipeId = recipe['recipe']
+    recipeId = recipe['recipeId']
+    flash(recipeId, category='error')
     recipe = Recipe.query.get(recipeId)
     if recipe:
         if recipe.user_id == current_user.id:
@@ -51,7 +76,6 @@ def upload():
     
     flash('Img Uploaded!', category='success')
     return 'Img Uploaded!', 200
-
 
 @views.route('/img/<int:id>')
 def get_img(id):

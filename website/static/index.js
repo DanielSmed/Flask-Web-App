@@ -1,8 +1,8 @@
-function deleteNote(noteId) {
-  fetch("/delete-note", {
+function deleteRecipe(recipeId) {
+    fetch("/delete-recipe", {
     method: "POST",
-    body: JSON.stringify({ noteId: noteId }),
-  }).then((_res) => {
-    window.location.href = "/";
-  });
+    body: JSON.stringify({ recipeId: recipeId }),
+    }).then((_res) => {
+        window.location.href = "/";
+    });
 }

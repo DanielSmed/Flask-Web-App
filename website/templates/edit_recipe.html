@@ -1,54 +1,108 @@
 {% extends "base.html" %}
+
 {% block title %}Edit{% endblock %}
+
 {% block content %}
-<h1 align="center">Recipes</h1>
+{% if recipe == "" %}
+<h1 align="center">New Recipe</h1>
+{%else%}
+<h1 align="center">Edit Recipe</h1>
+{% endif %}
 <form method="POST">
+    <br />
+    <div align="center" class="form-row">
+        <div align="center" class="form-group col">
+            <label for="exampleFormControlSelect1">Number of people</label>
+            <select class="form-control" id="exampleFormControlSelect1">
+                {% for i in range(100)%}
+                <option>{{i+1}}</option>
+                {%endfor%}
+            </select>
+        </div>
+
+        <div class="form-group col">
+            <label align="center">This recipe is:</label>
+            <ul align="center">
+                <li class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="Vegetarian" value="Vegetarian">
+                    <label class="form-check-label" for="Vegetarian">Vegetarian</label>
+                </li>
+                <li class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="Vegan" value="Vegan">
+                    <label class="form-check-label" for="Vegan">Vegan</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div align="center" class="form-group col">
+        <label align="center">This recipe does NOT contain:</label>
+        <ul align="center">
+            <li class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="milk" value="milk">
+                <label class="form-check-label" for="milk">milk</label>
+            </li>
+            <li class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="eggs" value="eggs">
+                <label class="form-check-label" for="eggs">eggs</label>
+            </li>
+            <li class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="peanuts" value="peanuts">
+                <label class="form-check-label" for="peanuts">peanuts</label>
+            <li class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="soya" value="soya">
+                <label class="form-check-label" for="soya">soya</label>
+            </li>
+            <li class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="gluten" value="gluten">
+                <label class="form-check-label" for="gluten">gluten</label>
+            </li>
+            <li class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="tree_nuts" value="tree_nuts">
+                <label class="form-check-label" for="tree_nuts">tree_nuts</label>
+            </li>
+            <li class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="fish" value="fish">
+                <label class="form-check-label" for="fish">fish</label>
+            </li>
+            <li class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="shellfish" value="shellfish">
+                <label class="form-check-label" for="shellfish">shellfish</label>
+            </li>
+        </ul>
+    </div>
+    <div align="center" class="form-group col">
+        <label align="center">This recipe does NOT contain:</label>
+        <ul align="center">
+            <li class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="milk" value="milk">
+                <label class="form-check-label" for="milk">milk</label>
+            </li>
+        </ul>
+    </div>
     <textarea name="recipe" id="recipe" class="form-control"></textarea>
     <br />
     <div align="center">
-        <button type="submit" class="btn btn-primary">Add Recipe</button>
+        <input type="file" name="pic" />
+        <input type="submit" value="Upload a picture" />
     </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="Vegetarian" value="Vegetarian">
-        <label class="form-check-label" for="Vegetarian">Vegetarian</label>
+    <br />
+    <div align="center" class="form-row">
+        <div class="form-group col">
+            <div align="center">
+                <input class="form-check-input" type="checkbox" id="privat" value="privat">
+                <label class="form-check-label" for="privat">privat</label>
+            </div>
+        </div>
+        <div class="form-group col">
+            <div align="center">
+                <button type="submit" class="btn btn-primary">Add recipe</button>
+                <a class="btn btn-danger" id="Profil" href="/user/{{cuser.user_name}}">Cancel</a>
+            </div>
+        </div>
     </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-        <label class="form-check-label" for="inlineCheckbox2">2</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-        <label class="form-check-label" for="inlineCheckbox1">3</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
-        <label class="form-check-label" for="inlineCheckbox2">4</label>
-    </div>
-    <!--Vegetarian = db.Column(db.Boolean)
-    Vegan = db.Column(db.Boolean)
-
-    milk = db.Column(db.Boolean)
-    eggs = db.Column(db.Boolean)
-    peanuts = db.Column(db.Boolean)
-    soya = db.Column(db.Boolean)
-    Gluten = db.Column(db.Boolean)
-    tree_nuts = db.Column(db.Boolean) # (such as walnuts and cashews)
-    fish = db.Column(db.Boolean)
-    shellfish = db.Column(db.Boolean)-->
 </form>
-<form action="http://localhost:5000/upload" enctype="multipart/form-data" method="POST">
-    <input type="file" name="pic" />
-    <input type="submit" value="Upload a file" />
-</form>
+<br />
 
-<ul class="list-group list-group-flush" id="recipes">
-    {% for recipe in user.recipes %}
-    <li class="list-group-item">
-        {{ recipe.title }}
-        <button type="button" class="close" onClick="deleteRecipe({{ recipe.id }})">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </li>
-    {% endfor %}
-</ul>
+
 {% endblock %}

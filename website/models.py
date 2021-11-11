@@ -13,17 +13,17 @@ class Ingredient(db.Model):
     name = db.Column(db.String(100))
     amount = db.Column(db.Float)
     unit = db.Column(db.String(10))
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
+    recipe_id = db.Column(db.String, db.ForeignKey('recipe.id'))
 
 class Img(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     mimetype = db.Column(db.Text, nullable=False)
     img = db.Column(db.Text, unique=True, nullable=False)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
+    recipe_id = db.Column(db.String, db.ForeignKey('recipe.id'))
 
 class Recipe(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True, default=generate_uuid)
     title = db.Column(db.String(100))
     amount = db.Column(db.Integer)
     images = db.relationship('Img')
@@ -43,6 +43,7 @@ class Recipe(db.Model):
     shellfish = db.Column(db.Boolean)
 
     user_id = db.Column(db.String, db.ForeignKey('user.id'))
+    privat = db.Column(db.Boolean)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
 
 class User(db.Model, UserMixin):
@@ -52,5 +53,6 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(150))
     last_name = db.Column(db.String(150))
     password = db.Column(db.String(150))
+    privat = db.Column(db.Boolean)
     recipes = db.relationship('Recipe')
     date = db.Column(db.DateTime(timezone=True), default=func.now())
