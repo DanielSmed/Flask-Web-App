@@ -10,7 +10,7 @@
     </div>
 </form>
 <ul class="list-group list-group-flush" id="recipes">
-    {% for recipe in user.recipes %}
+    {% for recipe in cuser.recipes %}
     <li class="list-group-item">
         {{ recipe.title }}
         <button type="button" class="close" onClick="deleteRecipe({{ recipe.id }})">

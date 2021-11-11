@@ -36,6 +36,11 @@
     fish = db.Column(db.Boolean)
     shellfish = db.Column(db.Boolean)-->
 </form>
+<form action="http://localhost:5000/upload" enctype="multipart/form-data" method="POST">
+    <input type="file" name="pic" />
+    <input type="submit" value="Upload a file" />
+</form>
+
 <ul class="list-group list-group-flush" id="recipes">
     {% for recipe in user.recipes %}
     <li class="list-group-item">

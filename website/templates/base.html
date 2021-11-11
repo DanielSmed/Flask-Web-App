@@ -36,15 +36,13 @@
 
         <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item"> <a class="nav-item nav-link" id="home" href="/">Home</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="#">Features</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="#">Pricing</a> </li>
+            <li class="nav-item"> <a class="nav-item nav-link" id="home" href="/">Recipe book</a> </li>
         </ul>
 
         <span class="navbar-text">
         <ul class="navbar-nav mr-auto">
-            {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-item nav-link" id="Profil" href="/">User</a></li>
+            {% if cuser.is_authenticated %}
+                <li class="nav-item"><a class="nav-item nav-link" id="Profil" href="/user/{{cuser.user_name}}">Profile</a></li>
                 <li class="nav-item"><a class="nav-item nav-link" id="logout" href="/logout">Logout</a></li>
             {% else %}
                 <li class="nav-item"><a class="nav-item nav-link" id="login" href="/login">Login</a></li>
