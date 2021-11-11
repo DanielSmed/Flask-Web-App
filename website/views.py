@@ -55,6 +55,8 @@ def delete_recipe():
         if recipe.user_id == current_user.id:
             db.session.delete(recipe)
             db.session.commit()
+    else:
+        flash("recipe not found", category='error')
 
     return jsonify({})
 
