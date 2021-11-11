@@ -11,10 +11,12 @@ user info comming later ...
     </li>
     {% for recipe in cuser.recipes %}
     <li class="list-group-item">
-        {{ recipe.title }}
-        <button type="button" class="close" onClick="deleteRecipe({{ recipe.id }})">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        <div class="Recipe_card">
+            <a id="Recipe" href="/edit/{{recipe.id}}">{{ recipe.title }}</a>
+            <button type="button" class="close" onClick="deleteRecipe({{ recipe.id }})">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </li>
     {% endfor %}
 </ul>

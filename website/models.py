@@ -25,26 +25,28 @@ class Img(db.Model):
 class Recipe(db.Model):
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
     title = db.Column(db.String(100))
+    execution = db.Column(db.String(10000))
     amount = db.Column(db.Integer)
+
     images = db.relationship('Img')
     ingredients = db.relationship('Ingredient')
-    execution = db.Column(db.String(10000))
 
-    Vegetarian = db.Column(db.Boolean)
-    Vegan = db.Column(db.Boolean)
+    vegetarian = db.Column(db.Boolean)
+    vegan = db.Column(db.Boolean)
 
     milk = db.Column(db.Boolean)
     eggs = db.Column(db.Boolean)
     peanuts = db.Column(db.Boolean)
     soya = db.Column(db.Boolean)
-    Gluten = db.Column(db.Boolean)
+    gluten = db.Column(db.Boolean)
     tree_nuts = db.Column(db.Boolean) # (such as walnuts and cashews)
     fish = db.Column(db.Boolean)
     shellfish = db.Column(db.Boolean)
 
-    user_id = db.Column(db.String, db.ForeignKey('user.id'))
     privat = db.Column(db.Boolean)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
+
+    user_id = db.Column(db.String, db.ForeignKey('user.id'))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.String, primary_key=True, default=generate_uuid)

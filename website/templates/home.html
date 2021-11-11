@@ -4,7 +4,9 @@
 <ul class="list-group list-group-flush" id="notes">
     {% for recipe in recipes %}
     <li class="list-group-item">
-        {{ recipe.title }}
+        <div class="Recipe_card">
+            <a id="Recipe" href="/recipe/{{recipe.id}}">{{ recipe.title }}</a>
+        </div>
     </li>
     {% endfor %}
 </ul>
