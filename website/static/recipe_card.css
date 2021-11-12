@@ -1,0 +1,58 @@
+.recipe_card-link {
+    text-decoration: none;
+    color: black;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.recipe_card-link:hover {
+    text-decoration: none;
+    color: black
+}
+
+.recipe_card {
+    background-color: darkslategray;
+    background-size: 100% 100%;
+    border-color: darkslategray;
+    border-radius: 25px;
+    border-style: solid;
+    border-width: 2px;
+    margin: 8px 4px;
+    padding: 2px 2px;
+    display: flex;
+    height: 150px;
+    width: 250px;
+    float: right
+}
+
+.recipe_card:hover {
+    background-color: black;
+    border-color: black;
+    padding: 8px 8px;
+}
+
+.recipe_card-delete {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    visibility:hidden;
+}
+
+.recipe_card:hover .recipe_card-delete {
+    visibility: visible;
+}
+
+.recipe_card-text {
+    height: 100%;
+    width: 100%;
+    color: black;
+    visibility: hidden;
+}
+
+.recipe_card:hover .recipe_card-text {
+    visibility: visible;
+}
+.recipe_card-new {
+    background-color: transparent;
+}

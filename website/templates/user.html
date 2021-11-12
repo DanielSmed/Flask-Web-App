@@ -8,74 +8,47 @@
 
 <div class="card-deck recipe_card-deck d-flex justify-content-around">
     {% if user.id == cuser.id %}
-    <a id="Recipe" href="/recipe/0" target="_blank" class="recipe_card-link">
-        <div class="container card recipe_card recipe_card-new">
-            <img class="recipe_card-img" src="/static/img/new-recipe.png" alt="no-image">
-            <div class="recipe_card-text">
-                <h5 align="center" class="recipe_card-title">New recipe</h5>
-            </div>
+    <a id="Recipe" href="/edit/0" class="recipe_card-link">
+        <div class="container recipe_card recipe_card-new" style="background-image: url('/static/img/new-recipe.png'); ">
+            
         </div>
     </a>
     {% endif %}
-    {% for recipe in user.recipes %}
-    {% if user.id == cuser.id %}
-    <a id="Recipe" href="/recipe/{{recipe.id}}" target="_blank" class="recipe_card-link">
-        <div class="container card recipe_card">
-            {% if recipe.images|length > 0 %}
-            <img class="recipe_card-img" src="/img/{{recipe.images[0].id}}" alt="image food">
-            {% else %}
-            <img class="recipe_card-img" src="/static/img/no-image.jpg" alt="no-image">
-            {% endif %}
-            <div class="recipe_card-text">
-                <h5 align="center" class="recipe_card-title">{{recipe.title}}</h5>
-                <p align="center" class="recipe_card-user">For {{recipe.amount}}</p>
-            </div>
-            <button type="button" class="close recipe_card-delete" onClick="deleteRecipe({{ recipe.id }})">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </a>
-    {% else %}
-    {% if not recipe.privat %}
-    <a id="Recipe" href="/recipe/{{recipe.id}}" target="_blank" class="recipe_card-link">
-        <div class="container card recipe_card">
-            {% if recipe.images|length > 0 %}
-            <img class="recipe_card-img" src="/img/{{recipe.images[0].id}}" alt="image food">
-            {% else %}
-            <img class="recipe_card-img" src="/static/img/no-image.jpg" alt="no-image">
-            {% endif %}
-            <div class="recipe_card-text">
-                <h5 align="center" class="recipe_card-title">{{recipe.title}}</h5>
-                <p align="center" class="recipe_card-user">For {{recipe.amount}}</p>
-            </div>
-        </div>
-    </a>
-    {% endif %}
-    {% endif %}
-    {% endfor %}
-</div>
 
-<ul class="list-group list-group-flush" id="recipes">
-    <li align="center" class="list-group-item">
-        <a class="btn btn-primary" id="Profil" type="butten" href="/edit/0">Add new recipe</a>
-    </li>
     {% for recipe in user.recipes %}
-    <li class="list-group-item">
         {% if user.id == cuser.id %}
-        <div class="Recipe_card Recipe_card_user">
-            <a id="Recipe" href="/edit/{{recipe.id}}">{{ recipe.title }}</a>
-            <button type="button" class="close" onClick="deleteRecipe({{ recipe.id }})">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+        {% if recipe.images|length > 0 %}
+        <div class="container recipe_card" style="background-image: url('/img/{{recipe.images[0].id}}');">
         {% else %}
-        {% if not recipe.privat %}
-        <div class="Recipe_card">
-            <a id="Recipe" href="/recipe/{{recipe.id}}">{{ recipe.title }}</a>
+        <div class="container recipe_card" style="background-image: url('/static/img/no-image.jpg'); ">
+        {% endif %}
+            <div class="recipe_card-text">
+                <a id="Recipe" href="/recipe/{{recipe.id}}" class="recipe_card-link">
+                    <h4 class="align-middle" align="center">View</h4>
+                </a>
+                <a id="Recipe" href="/edit/{{recipe.id}}" target="_blank" class="recipe_card-link">
+                    <h4 class="align-middle" align="center">Edit</h4>
+                </a>
+            </div>
         </div>
+    
+        {% else %}
+            {% if not recipe.privat %}
+            <a id="Recipe" href="/recipe/{{recipe.id}}" target="_blank" class="recipe_card-link">
+                {% if recipe.images|length > 0 %}
+                <div class="container recipe_card" style="background-image: url('/img/{{recipe.images[0].id}}');">
+                {% else %}
+                <div class="container recipe_card" style="background-image: url('/static/img/no-image.jpg'); ">
+                    {% endif %}
+                    <div class="recipe_card-text">
+                        <h5 class="align-middle" align="center">{{recipe.title}}</h5>
+                        <p class="align-middle" align="center">For {{recipe.amount}}</p>
+                    </div>
+                </div>
+            </a>
+            {% endif %}
         {% endif %}
-        {% endif %}
-    </li>
     {% endfor %}
-</ul>
-{% endblock %}
+    </div>
+
+    {% endblock %}
