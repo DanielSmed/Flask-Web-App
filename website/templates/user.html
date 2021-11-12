@@ -1,22 +1,30 @@
 {% extends "base.html" %}
 {% block title %}Profile{% endblock %}
 {% block content %}
-<h1 align="center">TheSmed's Profile</h1>
-user info comming later ...
+<h1 align="center">{{user.user_name}}'s Profile</h1>
+<p>user info comming later ...</p>
 <br/>
-<h2 align="center">My Recipes</h2>
+<h2 align="center">{{user.user_name}}'s Recipes</h2>
 <ul class="list-group list-group-flush" id="recipes">
     <li align="center" class="list-group-item">
         <a class="btn btn-primary" id="Profil" type="butten" href="/edit/0">Add new recipe</a>
     </li>
-    {% for recipe in cuser.recipes %}
+    {% for recipe in user.recipes %}
     <li class="list-group-item">
-        <div class="Recipe_card">
+        {% if user.id == cuser.id %}
+        <div class="Recipe_card Recipe_card_user">
             <a id="Recipe" href="/edit/{{recipe.id}}">{{ recipe.title }}</a>
             <button type="button" class="close" onClick="deleteRecipe({{ recipe.id }})">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
+        {% else %}
+        {% if not recipe.privat %}
+        <div class="Recipe_card">
+            <a id="Recipe" href="/recipe/{{recipe.id}}">{{ recipe.title }}</a>
+        </div>
+        {% endif %}
+        {% endif %}
     </li>
     {% endfor %}
 </ul>

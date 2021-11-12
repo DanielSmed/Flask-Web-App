@@ -3,11 +3,13 @@
 <h1 align="center">Recipes</h1>
 <ul class="list-group list-group-flush" id="notes">
     {% for recipe in recipes %}
-    <li class="list-group-item">
-        <div class="Recipe_card">
-            <a id="Recipe" href="/recipe/{{recipe.id}}">{{ recipe.title }}</a>
-        </div>
-    </li>
+        {% if not recipe.privat %}
+        <li class="list-group-item">
+            <div class="Recipe_card">
+                <a id="Recipe" href="/recipe/{{recipe.id}}">{{ recipe.title }}</a>
+            </div>
+        </li>
+        {% endif %}
     {% endfor %}
 </ul>
 {% endblock %}

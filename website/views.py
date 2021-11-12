@@ -17,9 +17,15 @@ def home():
 @login_required
 def user(username):
     user = User.query.filter_by(user_name=username).first()
+
     if user == None:
         flash('profile not found', category='error')
         return redirect(url_for('views.home'))
+
+    elif user.privat and user.id != current_user.id:
+        flash('profile is privat', category='warning')
+        return redirect(url_for('views.home'))
+
     return render_template('user.html', user=user, cuser=current_user)
 
 # -- recipe handeling --
@@ -32,7 +38,7 @@ def edit_recipe(ID):
         recipe = Recipe.query.get(ID)
 
         if current_user.id != recipe.user_id:
-            flash('not your recipe.', category='error')
+            flash('not your recipe.', category='warning')
             return redirect(url_for('views.edit_recipe', ID=recipeId))
         else:
 
@@ -71,7 +77,7 @@ def edit_recipe(ID):
                 flash('recipe not found', category='error')
                 return redirect(url_for('views.user', username=current_user.user_name))
             elif recipe.user_id != current_user.id:
-                flash('not your recipe', category='error')
+                flash('not your recipe', category='warning')
                 return redirect(url_for('views.home'))
         return render_template('edit_recipe.html', recipe=recipe, cuser=current_user)
 
@@ -81,6 +87,11 @@ def recipe(ID):
     if recipe == None:
         flash('recipe not found', category='error')
         return redirect(url_for('views.home'))
+
+    elif recipe.privat and recipe.user_id != current_user.id:
+        flash('Recipe is privat', category='warning')
+        return redirect(url_for('views.home'))
+
     return render_template('recipe.html', recipe=recipe, cuser=current_user)
 
 @views.route('/delete-recipe', methods=['POST'])

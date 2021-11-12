@@ -75,15 +75,19 @@
 
 <form id="recipe" method="POST">
     <label class="form-check-label" for="title">Title</label>
-    <textarea id="title" name="title" class="form-control" required></textarea>
+    <textarea id="title" name="title" class="form-control" required>{{recipe.title}}</textarea>
     <br />
     <label class="form-check-label" for="Execution">Execution</label>
-    <textarea id="execution" name="execution" class="form-control" required></textarea>
+    <textarea id="execution" name="execution" class="form-control" required>{{recipe.execution}}</textarea>
     <br />
     <div align="center" class="form-row">
         <div class="form-group col">
             <div align="center">
+                {% if recipe.privat %}
+                <input class="form-check-input" type="checkbox" name="privat" id="privat" value="privat" checked>
+                {% else %}
                 <input class="form-check-input" type="checkbox" name="privat" id="privat" value="privat">
+                {% endif %}
                 <label class="form-check-label" for="privat">privat</label>
             </div>
         </div>
@@ -92,7 +96,11 @@
             <select class="form-control" id="exampleFormControlSelect2" name="amount" form="recipe" required>
                 <option value="">Select</option>
                 {% for i in range(100)%}
+                {% if recipe.amount == i+1 %}
+                <option selected value="{{i+1}}">{{i+1}}</option>
+                {% else %}
                 <option value="{{i+1}}">{{i+1}}</option>
+                {% endif %}
                 {%endfor%}
             </select>
         </div>
@@ -101,11 +109,19 @@
             <label align="center">This recipe is:</label>
             <ul align="center">
                 <li class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="Vegetarian" id="vegetarian" value="vegetarian">
+                    {% if recipe.vegetarian %}
+                    <input class="form-check-input" type="checkbox" name="vegetarian" id="vegetarian" value="vegetarian" checked>
+                    {% else %}
+                    <input class="form-check-input" type="checkbox" name="vegetarian" id="vegetarian" value="vegetarian">
+                    {% endif %}
                     <label class="form-check-label" for="vegetarian">vegetarian</label>
                 </li>
                 <li class="form-check form-check-inline">
+                    {% if recipe.vegan %}
+                    <input class="form-check-input" type="checkbox" name="vegan" id="vegan" value="vegan" checked>
+                    {% else %}
                     <input class="form-check-input" type="checkbox" name="vegan" id="vegan" value="vegan">
+                    {% endif %}
                     <label class="form-check-label" for="vegan">vegan</label>
                 </li>
             </ul>
@@ -116,45 +132,77 @@
         <label align="center">This recipe does NOT contain:</label>
         <ul align="center">
             <li class="form-check form-check-inline">
+                {% if recipe.milk %}
+                <input class="form-check-input" type="checkbox" name="milk" id="milk" value="milk" checked>
+                {% else %}
                 <input class="form-check-input" type="checkbox" name="milk" id="milk" value="milk">
+                {% endif %}
                 <label class="form-check-label" for="milk">milk</label>
             </li>
             <li class="form-check form-check-inline">
+                {% if recipe.eggs %}
+                <input class="form-check-input" type="checkbox" name="eggs" id="eggs" value="eggs" checked>
+                {% else %}
                 <input class="form-check-input" type="checkbox" name="eggs" id="eggs" value="eggs">
+                {% endif %}
                 <label class="form-check-label" for="eggs">eggs</label>
             </li>
             <li class="form-check form-check-inline">
+                {% if recipe.peanuts %}
+                <input class="form-check-input" type="checkbox" name="peanuts" id="peanuts" value="peanuts" checked>
+                {% else %}
                 <input class="form-check-input" type="checkbox" name="peanuts" id="peanuts" value="peanuts">
+                {% endif %}
                 <label class="form-check-label" for="peanuts">peanuts</label>
             <li class="form-check form-check-inline">
+                {% if recipe.soya %}
+                <input class="form-check-input" type="checkbox" name="soya" id="soya" value="soya" checked>
+                {% else %}
                 <input class="form-check-input" type="checkbox" name="soya" id="soya" value="soya">
+                {% endif %}
                 <label class="form-check-label" for="soya">soya</label>
             </li>
             <li class="form-check form-check-inline">
+                {% if recipe.gluten %}
+                <input class="form-check-input" type="checkbox" name="gluten" id="gluten" value="gluten" checked>
+                {% else %}
                 <input class="form-check-input" type="checkbox" name="gluten" id="gluten" value="gluten">
+                {% endif %}
                 <label class="form-check-label" for="gluten">gluten</label>
             </li>
             <li class="form-check form-check-inline">
+                {% if recipe.tree_nuts %}
+                <input class="form-check-input" type="checkbox" name="tree_nuts" id="tree_nuts" value="tree_nuts" checked>
+                {% else %}
                 <input class="form-check-input" type="checkbox" name="tree_nuts" id="tree_nuts" value="tree_nuts">
+                {% endif %}
                 <label class="form-check-label" for="tree_nuts">tree_nuts</label>
             </li>
             <li class="form-check form-check-inline">
+                {% if recipe.fish %}
+                <input class="form-check-input" type="checkbox" name="fish" id="fish" value="fish" checked>
+                {% else %}
                 <input class="form-check-input" type="checkbox" name="fish" id="fish" value="fish">
+                {% endif %}
                 <label class="form-check-label" for="fish">fish</label>
             </li>
             <li class="form-check form-check-inline">
+                {% if recipe.shellfish %}
+                <input class="form-check-input" type="checkbox" name="shellfish" id="shellfish" value="shellfish" checked>
+                {% else %}
                 <input class="form-check-input" type="checkbox" name="shellfish" id="shellfish" value="shellfish">
+                {% endif %}
                 <label class="form-check-label" for="shellfish">shellfish</label>
             </li>
         </ul>
     </div>
     <br />
     <div align="center">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-danger" type="button" onClick="deleteRecipe({{ recipe.id }})">Delete</button>
         {% if recipe.title != none %}
         <a class="btn btn-warning" id="Profil" href="/user/{{cuser.user_name}}">Cancel</a>
         {% endif %}
-        <button class="btn btn-danger" type="button" onClick="deleteRecipe({{ recipe.id }})">Delete</button>
+        <button type="submit" class="btn btn-primary">Save</button>
     </div>
 </form>
 <br />
