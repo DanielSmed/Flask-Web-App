@@ -11,40 +11,36 @@
 <form action="/add/{{recipe.id}}" enctype="multipart/form-data" id="ingredient" method="POST">
     <div align="center" class="form-group">
         <label align="center">Ingredients:</label>
-        <ul class="list-group list-group-flush" id="ingredients">
-            {% for ingredient in recipe.ingredients %}
-            <li class="list-group-item Ingredient_card">
-                {{ ingredient.name }} {{ ingredient.amount }} {{ ingredient.unit }}
-                <button type="button" class="close" onClick="remove({{ ingredient.id }})">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </li>
-            {% endfor %}
+        {% for ingredient in recipe.ingredients %}
+        <div class="list-group-item Ingredient_card">
+            {{ ingredient.name }} {{ ingredient.amount }} {{ ingredient.unit }}
+            <button type="button" class="close" onClick="remove({{ ingredient.id }})">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
 
-            <li class="list-group-item">
-                <div class="input-group">
+        <div class="input-group">
 
-                    <input type="text" class="form-control" name="name" placeholder="ingredient" aria-label="ingredient" form="ingredient" aria-describedby="basic-addon2" required>
+            <input type="text" class="form-control" name="name" placeholder="ingredient" aria-label="ingredient" form="ingredient" aria-describedby="basic-addon2" required>
 
-                    <div class="input-group-append">
-                        <div class="form-group col" ">
-                            <input type="number" step="0.01" class="form-control id="number" name="amount" placeholder="amount" form="ingredient" value="" required>
-                        </div>
-                        <div class="form-group col">
-                            <select name="unit" class="form-control" id="exampleFormControlSelect1" form="ingredient" required>
-                                <option value="">unit</option>
-                                <option value="Liter">l</option>
-                                <option value="Milliliter">ml</option>
-                                <option value="add more ...">add more ...</option>
-                            </select>
-                        </div>
-                        <div class="form-group col">
-                            <button type="submit" class="btn btn-outline-primary">Add</button>
-                        </div>
-                    </div>
+            <div class="input-group-append">
+                <div class="form-group col" ">
+                    <input type="number" step="0.01" class="form-control id="number" name="amount" placeholder="amount" form="ingredient" value="" required>
                 </div>
-            </li>
-        </ul>
+                <div class="form-group col">
+                    <select name="unit" class="form-control" id="exampleFormControlSelect1" form="ingredient" required>
+                        <option value="">unit</option>
+                        <option value="Liter">l</option>
+                        <option value="Milliliter">ml</option>
+                        <option value="add more ...">add more ...</option>
+                    </select>
+                </div>
+                <div class="form-group col">
+                    <button type="submit" class="btn btn-outline-primary">Add</button>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
 

@@ -1,15 +1,23 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
 <h1 align="center">Recipes</h1>
-<ul class="list-group list-group-flush" id="notes">
+<div class="card-deck recipe_card-deck d-flex justify-content-around">
     {% for recipe in recipes %}
-        {% if not recipe.privat %}
-        <li class="list-group-item">
-            <div class="Recipe_card">
-                <a id="Recipe" href="/recipe/{{recipe.id}}">{{ recipe.title }}</a>
+    {% if not recipe.privat %}
+    <a id="Recipe" href="/recipe/{{recipe.id}}" target="_blank" class="recipe_card-link">
+        <div class="container card recipe_card">
+            {% if recipe.images|length > 0 %}
+            <img class="recipe_card-img" src="/img/{{recipe.images[0].id}}" alt="image food">
+            {% else %}
+            <img class="recipe_card-img" src="/static/img/no-image.jpg" alt="no-image">
+            {% endif %}
+            <div class="recipe_card-text">
+                <h5 align="center" class="recipe_card-title">{{recipe.title}}</h5>
+                <p align="center" class="recipe_card-user">For {{recipe.amount}}</p>
             </div>
-        </li>
-        {% endif %}
+        </div>
+    </a>
+    {% endif %}
     {% endfor %}
-</ul>
+</div>
 {% endblock %}
