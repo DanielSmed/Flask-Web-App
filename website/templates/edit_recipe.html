@@ -8,18 +8,21 @@
 {%else%}
 <h1 align="center">Edit Recipe</h1>
 {% endif %}
-<form action="/add/{{recipe.id}}" enctype="multipart/form-data" id="ingredient" method="POST">
-    <div align="center" class="form-group">
-        <label align="center">Ingredients:</label>
-        {% for ingredient in recipe.ingredients %}
-        <div class="list-group-item Ingredient_card">
-            {{ ingredient.name }} {{ ingredient.amount }} {{ ingredient.unit }}
-            <button type="button" class="close" onClick="remove({{ ingredient.id }})">
+
+<div align="center" class="form-group">
+    <label align="center">Ingredients:</label>
+    {% for ingredient in recipe.ingredients %}
+    <div class="list-group-item Ingredient_card">
+        {{ ingredient.name }} {{ ingredient.amount }} {{ ingredient.unit }}
+
+        <form action="/delete-ingredient/{{ingredient.id}}" enctype="multipart/form-data" id="delete-ingredient" method="POST">
+            <button type="submit" class="close">
                 <span aria-hidden="true">&times;</span>
             </button>
-        </div>
-        {% endfor %}
-
+        </form>
+    </div>
+    {% endfor %}
+    <form action="/add/{{recipe.id}}" enctype="multipart/form-data" id="ingredient" method="POST">
         <div class="input-group">
 
             <input type="text" class="form-control" name="name" placeholder="ingredient" aria-label="ingredient" form="ingredient" aria-describedby="basic-addon2" required>
@@ -41,21 +44,23 @@
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 
 <ul class="list-group list-group-flush" id="images">
     {% if recipe.images|length > 0 %}
-        {% for i in range((recipe.images|length)) %}
-        <li class="list-group-item">
-            <a href="/img/{{recipe.images[i].id}}" target="_blank">
-                {{recipe.images[i].name}}
+    {% for i in range((recipe.images|length)) %}
+    <li class="list-group-item">
+        <a href="/img/{{recipe.images[i].id}}" target="_blank">
+            {{recipe.images[i].name}}
             <a />
-            <button type="button" class="close" onClick="delete({{ recipe.images[i].id }})">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </li>
-        {% endfor %}
+            <form action="/delete-image/{{recipe.images[i].id}}" enctype="multipart/form-data" id="delete-image" method="POST">
+                <button type="submit" class="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </form>
+    </li>
+    {% endfor %}
     {% endif %}
     <li class="list-group-item">
         <form action="/upload/{{recipe.id}}" enctype="multipart/form-data" method="POST">
@@ -194,14 +199,24 @@
     </div>
     <br />
     <div align="center">
-        <button class="btn btn-danger" type="button" onClick="deleteRecipe({{ recipe.id }})">Delete</button>
-        {% if recipe.title != none %}
-        <a class="btn btn-warning" id="Profil" href="/user/{{cuser.user_name}}">Cancel</a>
-        {% endif %}
         <button type="submit" class="btn btn-primary">Save</button>
     </div>
 </form>
 <br />
 
+{% if recipe.title != none %}
+<div align="center">
+    <a class="btn btn-warning" id="Profil" href="/user/{{cuser.user_name}}">Cancel</a>
+</div>
+<br />
+{% endif %}
 
-{% endblock %}
+<div align="center">
+    <form action="/delete-recipe/{{recipe.id}}" enctype="multipart/form-data" id="delete-recipe" method="POST">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</div>
+<br />
+
+
+    {% endblock %}

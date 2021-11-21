@@ -7,7 +7,7 @@ import json
 
 views = Blueprint('views', __name__)
 
-@views.route('/', methods=['GET', 'POST'])
+@views.route('/')
 def home():
     return render_template("home.html", cuser=current_user, recipes=Recipe.query.order_by(Recipe.date).all())
 
@@ -76,6 +76,7 @@ def edit_recipe(ID):
             if recipe == None:
                 flash('recipe not found', category='error')
                 return redirect(url_for('views.user', username=current_user.user_name))
+
             elif recipe.user_id != current_user.id:
                 flash('not your recipe', category='warning')
                 return redirect(url_for('views.home'))
@@ -94,21 +95,24 @@ def recipe(ID):
 
     return render_template('recipe.html', recipe=recipe, cuser=current_user)
 
-@views.route('/delete-recipe', methods=['POST'])
+@views.route('/delete-recipe/<ID>', methods=['POST'])
 @login_required
-def delete_recipe():
-    recipe = json.loads(request.data)
-    recipeId = recipe['recipeId']
-    flash(recipeId, category='error')
-    recipe = Recipe.query.get(recipeId)
+def delete_recipe(ID):
+    recipe = Recipe.query.get(ID)
     if recipe:
         if recipe.user_id == current_user.id:
+            for image in recipe.images:
+                db.session.delete(image)
+                db.session.commit()
+            for ingredient in recipe.ingredients:
+                db.session.delete(ingredient)
+                db.session.commit()
             db.session.delete(recipe)
             db.session.commit()
     else:
         flash("recipe not found", category='error')
 
-    return jsonify({})
+    return redirect(url_for('views.user', username=current_user.user_name))
 
 # -- image handeling --
 
@@ -139,12 +143,29 @@ def upload(recipeId):
 
 @views.route('/img/<int:id>')
 def get_img(id):
-    img = Img.query.filter_by(id=id).first()
+    img = Img.query.get(id)
     if not img:
         flash('Img Not Found!', category='error')
         return 'Img Not Found!', 404
 
     return Response(img.img, mimetype=img.mimetype)
+
+@views.route('/delete-image/<ID>', methods=['POST'])
+@login_required
+def delete_image(ID):
+    image = Img.query.get(ID)
+    if image:
+        recipe = Recipe.query.get(image.recipe_id)
+        if recipe.user_id == current_user.id:
+            db.session.delete(image)
+            db.session.commit()
+            return redirect(url_for('views.edit_recipe', ID=recipe.id))
+        else:
+            flash("image not in you recipe", category='error')
+            return redirect(url_for('views.user', username=current_user.user_name))
+    else:
+        flash("image not found", category='error')
+        return redirect(url_for('views.user', username=current_user.user_name))
 
 # -- ingredient handeling --
 
@@ -169,3 +190,20 @@ def add(recipeId):
             return redirect(url_for('views.edit_recipe', ID=recipeId))
         
     return redirect(url_for('views.edit_recipe', ID=recipeId))
+
+@views.route('/delete-ingredient/<ID>', methods=['POST'])
+@login_required
+def delete_ingredient(ID):
+    ingredient = Ingredient.query.get(ID)
+    if ingredient:
+        recipe = Recipe.query.get(ingredient.recipe_id)
+        if recipe.user_id == current_user.id:
+            db.session.delete(ingredient)
+            db.session.commit()
+            return redirect(url_for('views.edit_recipe', ID=recipe.id))
+        else:
+            flash("ingredient not in you recipe", category='error')
+            return redirect(url_for('views.user', username=current_user.user_name))
+    else:
+        flash("ingredient not found", category='error')
+        return redirect(url_for('views.user', username=current_user.user_name))
