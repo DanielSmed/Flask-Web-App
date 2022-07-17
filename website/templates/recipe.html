@@ -3,5 +3,15 @@
 {% block title %}recipe{% endblock %}
 
 {% block content %}
-
+<h1>{{recipe.title}}</h1>
+<div class="list-group-item Ingredient_card">
+    <ul>
+        {% for ingredient in recipe.ingredients %}
+        <li>{{ ingredient.name }} {{ ingredient.amount }} {{ ingredient.unit }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div>
+    {{recipe.execution}}
+</div>
 {% endblock %}
